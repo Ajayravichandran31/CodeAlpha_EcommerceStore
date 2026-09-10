@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const db = require("./config/db");
+const productRoutes = require("./routes/productRoutes");
 
 dotenv.config();
 
@@ -8,6 +9,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
     res.send("CodeAlpha E-commerce Backend is running!");
