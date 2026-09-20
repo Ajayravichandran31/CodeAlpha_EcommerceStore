@@ -1,5 +1,5 @@
 const API_URL = "http://localhost:5000/api/products";
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let products = [];
 
 async function loadProducts() {
@@ -12,6 +12,7 @@ async function loadProducts() {
 
         products = await response.json();
         displayProducts(products);
+        displayCart();
     } catch (error) {
         console.error("Error loading products:", error);
 
@@ -70,7 +71,7 @@ function addToCart(productId) {
     }
 
     console.log("Current cart:", cart);
-
+    localStorage.setItem("cart", JSON.stringify(cart));
     displayCart();
 }
 
@@ -135,6 +136,8 @@ function increaseQuantity(productId) {
         cartItem.quantity++;
     }
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     displayCart();
 }
 
@@ -151,11 +154,15 @@ function decreaseQuantity(productId) {
         cart = cart.filter(item => item.id !== productId);
     }
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     displayCart();
 }
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
 
     displayCart();
 }
