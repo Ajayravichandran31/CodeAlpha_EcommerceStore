@@ -106,8 +106,17 @@ function displayCart() {
 
         cartItem.innerHTML = `
             <h3>${product.name}</h3>
+
             <p>Price: ₹${product.price}</p>
-            <p>Quantity: ${item.quantity}</p>
+
+            <div>
+                <button onclick="decreaseQuantity(${product.id})">−</button>
+
+                <span> ${item.quantity} </span>
+
+                <button onclick="increaseQuantity(${product.id})">+</button>
+            </div>
+
             <p>Item Total: ₹${itemTotal.toFixed(2)}</p>
         `;
 
@@ -115,6 +124,31 @@ function displayCart() {
     });
 
     cartTotal.textContent = `Total: ₹${total.toFixed(2)}`;
+}
+function increaseQuantity(productId) {
+    const cartItem = cart.find(item => item.id === productId);
+
+    if (cartItem) {
+        cartItem.quantity++;
+    }
+
+    displayCart();
+}
+
+function decreaseQuantity(productId) {
+    const cartItem = cart.find(item => item.id === productId);
+
+    if (!cartItem) {
+        return;
+    }
+
+    if (cartItem.quantity > 1) {
+        cartItem.quantity--;
+    } else {
+        cart = cart.filter(item => item.id !== productId);
+    }
+
+    displayCart();
 }
 
 loadProducts();
