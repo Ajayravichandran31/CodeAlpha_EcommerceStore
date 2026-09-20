@@ -118,6 +118,9 @@ function displayCart() {
             </div>
 
             <p>Item Total: ₹${itemTotal.toFixed(2)}</p>
+            <button onclick="removeFromCart(${product.id})">
+                Remove from Cart
+            </button>
         `;
 
         cartItems.appendChild(cartItem);
@@ -147,6 +150,12 @@ function decreaseQuantity(productId) {
     } else {
         cart = cart.filter(item => item.id !== productId);
     }
+
+    displayCart();
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
 
     displayCart();
 }
